@@ -38,23 +38,26 @@ namespace WebAtividadeEntrevista.Controllers
             }
             else
             {
-                
-                model.Id = bo.Incluir(new Cliente()
-                {                    
-                    CEP = model.CEP,
-                    Cidade = model.Cidade,
-                    Email = model.Email,
-                    Estado = model.Estado,
-                    Logradouro = model.Logradouro,
-                    Nacionalidade = model.Nacionalidade,
-                    CPF = model.CPF,
-                    Nome = model.Nome,
-                    Sobrenome = model.Sobrenome,
-                    Telefone = model.Telefone
-                });
+                if (!bo.VerificarExistencia(model.CPF)) {
+                    model.Id = bo.Incluir(new Cliente()
+                    {
+                        CEP = model.CEP,
+                        Cidade = model.Cidade,
+                        Email = model.Email,
+                        Estado = model.Estado,
+                        Logradouro = model.Logradouro,
+                        Nacionalidade = model.Nacionalidade,
+                        CPF = model.CPF,
+                        Nome = model.Nome,
+                        Sobrenome = model.Sobrenome,
+                        Telefone = model.Telefone
+                    });
 
-           
-                return Json("Cadastro efetuado com sucesso");
+                    return Json("Cadastro efetuado com sucesso");
+                }
+
+                Response.StatusCode = 400;
+                return Json("Já existe uma pessoa com o cpf informado");
             }
         }
 
@@ -99,6 +102,8 @@ namespace WebAtividadeEntrevista.Controllers
             BoCliente bo = new BoCliente();
             Cliente cliente = bo.Consultar(id);
             Models.ClienteModel model = null;
+
+
 
             if (cliente != null)
             {
@@ -200,6 +205,22 @@ namespace WebAtividadeEntrevista.Controllers
                 });
 
                 return Json("Beneficiário alterado com sucesso");
+            }
+        }
+
+        [HttpPost]
+        public JsonResult BeneficiarioList(int idCliente)
+        {
+            try
+            {
+                List<Beneficiario> beneficiarios = new BoBeneficiario().Listar(idCliente);
+
+                //Return result to jTable
+                return Json(new { Result = "OK", Records = beneficiarios, TotalRecordCount = beneficiarios.Count() });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Result = "ERROR", Message = ex.Message });
             }
         }
 

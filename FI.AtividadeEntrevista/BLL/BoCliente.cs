@@ -53,15 +53,6 @@ namespace FI.AtividadeEntrevista.BLL
         /// <summary>
         /// Lista os clientes
         /// </summary>
-        public List<DML.Cliente> Listar()
-        {
-            DAL.DaoCliente cli = new DAL.DaoCliente();
-            return cli.Listar();
-        }
-
-        /// <summary>
-        /// Lista os clientes
-        /// </summary>
         public List<DML.Cliente> Pesquisa(int iniciarEm, int quantidade, string campoOrdenacao, bool crescente, out int qtd)
         {
             DAL.DaoCliente cli = new DAL.DaoCliente();

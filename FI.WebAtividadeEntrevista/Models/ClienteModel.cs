@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
+using WebAtividadeEntrevista.Validations;
 
 namespace WebAtividadeEntrevista.Models
 {
@@ -54,6 +51,7 @@ namespace WebAtividadeEntrevista.Models
         /// CPF
         /// </summary>
         [Required]
+        [CpfValidation]
         public string CPF { get; set; }
 
         /// <summary>
