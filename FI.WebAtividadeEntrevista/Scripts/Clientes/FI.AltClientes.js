@@ -46,12 +46,7 @@ $(document).ready(function () {
                     window.location.href = urlRetorno;
                 }
         });
-    });
-
-    if (obj) {
-        $("#modalBeneficiarios #modalNome").val(obj.Nome);
-        $("#modalBeneficiarios #modalCPF").val(obj.CPF);
-    }
+    });   
 
     $('#btnIncluir').on('click', function (e) {
         e.preventDefault();
@@ -89,10 +84,27 @@ function ObterModalBeneficiario() {
 }
 
 function AlterarBeneficiario() {
+    $.ajax({
+        url: urlAlterarBeneficiario,
+        method: "POST",
+        data: ObterModalBeneficiario(),
+        error:
+            function (r) {
+                if (r.status == 400)
+                    ModalDialog("Ocorreu um erro", r.responseJSON);
+                else if (r.status == 500)
+                    ModalDialog("Ocorreu um erro", "Ocorreu um erro interno no servidor.");
+            },
+        success:
+            function (r) {
+                ModalDialog("Sucesso!", r)
+                $("#modalBeneficiarios")[0].reset();
+                window.location.href = urlRetorno;
 
+                MostrarGradeDeBeneficiarios();
+            }
+    })
 }
-
-
 
 function IncluirBeneficiario() {
     $.ajax({
@@ -113,8 +125,34 @@ function IncluirBeneficiario() {
                 window.location.href = urlRetorno;
 
                 MostrarGradeDeBeneficiarios();
+                LimparModalDeBeneficiario();
             }
     });
+}
+
+function DeletarBeneficiario(idBeneficiario) {
+    $.ajax({
+        url: urlExcluirBeneficiario,
+        method: "POST",
+        data: {
+            idBeneficiario: idBeneficiario
+        },
+        error:
+            function (r) {
+                if (r.status == 400)
+                    ModalDialog("Ocorreu um erro", r.responseJSON);
+                else if (r.status == 500)
+                    ModalDialog("Ocorreu um erro", "Ocorreu um erro interno no servidor.");
+            },
+        success:
+            function (r) {
+                ModalDialog("Sucesso!", r)
+                $("#modalBeneficiarios")[0].reset();
+                window.location.href = urlRetorno;
+
+                MostrarGradeDeBeneficiarios();
+            }
+    })
 }
 
 function MostrarGradeDeBeneficiarios() {
@@ -136,13 +174,13 @@ function MostrarGradeDeBeneficiarios() {
                 Alterar: {
                     title: '',
                     display: function (data) {
-                        return `<button data-beneficiario-id="${data.Id}" class="btn btn-primary btn-sm">Alterar</button>`;
+                        return `<button data-beneficiario-id="${data.Id}" class="btn btn-primary btn-sm alterar" onclick="AlterarBeneficiario()">Alterar</button>`;
                     }
                 },
                 Excluir: {
                     title: '',
                     display: function (data) {
-                        return `<button data-beneficiario-id="${data.Id}" class="btn btn-primary btn-sm excluir">Excluir</button>`;
+                        return `<button data-beneficiario-id="${data.Id}" class="btn btn-primary btn-sm excluir" onclick="DeletarBeneficiario()">Excluir</button>`;
                     }
                 }
             }
