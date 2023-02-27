@@ -3,11 +3,13 @@
     ViewBag.Title = "Alterar Cliente";
 }
 @section scripts{
-<script>
+	<script>
         var urlPost = '@Url.Action("Alterar", "Cliente", new { area = "" })';
         var obj = @Html.Raw(Json.Encode(Model));
         var urlRetorno = '@Url.Action("Index", "Cliente", new { area = "" })';
-</script>
+        var urlPostBeneficiario = '@Url.Action("IncluirBeneficiario", "Cliente", new { area = ""})';
+        var urlListarBeneficiario = '@Url.Action("BeneficiarioList", "Cliente", new { area = "", IdCliente = Model.Id })';
+	</script>
     @Scripts.Render("~/bundles/altClientes")
 }
 <h2>@Html.Raw(ViewBag.Title)</h2>

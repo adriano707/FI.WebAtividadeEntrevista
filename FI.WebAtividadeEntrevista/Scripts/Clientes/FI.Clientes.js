@@ -65,36 +65,6 @@ $("#btnFechar").on('click', function () {
 
 })
 
-function ListarBeneficiarios(idCliente) {
-	if (document.getElementById("gridBeneficiarios"))
-		$('#gridBeneficiarios').jtable({
-			title: 'Beneficiarios',
-			actions: {
-				listAction: urlBeneficiarioList,
-			},
-			fields: {
-				Nome: {
-					title: 'Nome',
-					width: '50%'
-				},
-				CPF: {
-					title: 'CPF',
-					width: '35%'
-				},
-				Alterar: {
-					title: '',
-					display: function (data) {
-						return '<button onclick="window.location.href=\'' + urlAlteracao + '/' + data.record.Id + '\'" class="btn btn-primary btn-sm">Alterar</button>';
-					}
-				},
-				Excluir: {
-					title: '',
-					display: function (data) {
-						return '<button onclick="window.location.href=\'' + urlExclusao + '/' + data.record.Id + '\'" class="btn btn-primary btn-sm">Alterar</button>';
-					}
-				}
-			}
 
-}
 
 

@@ -103,8 +103,6 @@ namespace WebAtividadeEntrevista.Controllers
             Cliente cliente = bo.Consultar(id);
             Models.ClienteModel model = null;
 
-
-
             if (cliente != null)
             {
                 model = new ClienteModel()
@@ -172,6 +170,7 @@ namespace WebAtividadeEntrevista.Controllers
             {
                 model.Id = bo.Incluir(new Beneficiario()
                 {
+                    IdCliente = model.IdCliente,
                     CPF = model.CPF,
                     Nome = model.Nome
                 });
@@ -215,7 +214,6 @@ namespace WebAtividadeEntrevista.Controllers
             {
                 List<Beneficiario> beneficiarios = new BoBeneficiario().Listar(idCliente);
 
-                //Return result to jTable
                 return Json(new { Result = "OK", Records = beneficiarios, TotalRecordCount = beneficiarios.Count() });
             }
             catch (Exception ex)
