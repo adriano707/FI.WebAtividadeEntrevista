@@ -31,6 +31,7 @@ $(document).ready(function () {
                 "Logradouro": $(this).find("#Logradouro").val(),
                 "Telefone": $(this).find("#Telefone").val()
             },
+
             error:
                 function (r) {
                     if (r.status == 400)
@@ -56,8 +57,27 @@ $(document).ready(function () {
         e.preventDefault();
 
         IncluirBeneficiario();
+        LimparFormularioDeCliente();
     });
 })
+
+function LimparFormularioDeCliente() {
+    $("#Nome").val('');
+    $("#CEP").val('');
+    $("#Email").val('');
+    $("#Sobrenome").val('');
+    $("#Nacionalidade").val('');
+    $("#CPF").val('');
+    $("#Estado").val('');
+    $("#Cidade").val('');
+    $("#Logradouro").val('');
+    $("#Telefone").val('');
+}
+
+function LimparModalDeBeneficiario() {
+    $("#modalNome").val('');
+    $("#modalCPF").val('');
+}
 
 function ObterModalBeneficiario() {
     var beneficiario = {
@@ -100,9 +120,7 @@ function IncluirBeneficiario() {
 function MostrarGradeDeBeneficiarios() {
     if (document.getElementById("gridBeneficiarios"))
         $('#gridBeneficiarios').jtable({
-            title: 'Beneficiarios',
-            paging: true, //Enable paging
-            pageSize: 5, //Set page size (default: 10)           
+            title: 'Beneficiarios',                  
             actions: {
                 listAction: urlListarBeneficiario,
             },
@@ -118,13 +136,13 @@ function MostrarGradeDeBeneficiarios() {
                 Alterar: {
                     title: '',
                     display: function (data) {
-                        return '<button onclick="window.location.href=\'' + '/' + data.record.Id + '\'" class="btn btn-primary btn-sm">Alterar</button>';
+                        return `<button data-beneficiario-id="${data.Id}" class="btn btn-primary btn-sm">Alterar</button>`;
                     }
                 },
                 Excluir: {
                     title: '',
                     display: function (data) {
-                        return '<button onclick="window.location.href=\'' + '/' + data.record.Id + '\'" class="btn btn-primary btn-sm">Excluir</button>';
+                        return `<button data-beneficiario-id="${data.Id}" class="btn btn-primary btn-sm excluir">Excluir</button>`;
                     }
                 }
             }

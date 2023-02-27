@@ -55,6 +55,15 @@ namespace FI.AtividadeEntrevista.DAL
             return ben;
         }
 
+        internal void Excluir(long Id)
+        {
+            List<System.Data.SqlClient.SqlParameter> parametros = new List<System.Data.SqlClient.SqlParameter>();
+
+            parametros.Add(new System.Data.SqlClient.SqlParameter("Id", Id));
+
+            base.Executar("FI_SP_DeleteBeneficiario", parametros);
+        }
+
         private List<DML.Beneficiario> Converter(DataSet ds)
         {
             List<DML.Beneficiario> lista = new List<DML.Beneficiario>();

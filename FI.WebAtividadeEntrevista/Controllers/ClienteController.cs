@@ -222,10 +222,17 @@ namespace WebAtividadeEntrevista.Controllers
             }
         }
 
-        //[HttpPost]
-        //public JsonResult ExcluirBeneficiario(long id)
-        //{
+        [HttpPost]
+        public JsonResult ExcluirBeneficiario(long idBeneficiario)
+        {
+            bool foiRemovido = new BoBeneficiario().ExcluirBeneficiario(idBeneficiario);
+            if (foiRemovido)
+            {
+                return Json("Beneficiário removido com sucesso");
+            }
 
-        //}
+            Response.StatusCode = 400;
+            return Json("Erro ao remover o beneficiario.");
+        }
     }
 }

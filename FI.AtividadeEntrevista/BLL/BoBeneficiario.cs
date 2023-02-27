@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FI.AtividadeEntrevista.DML;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,6 +36,16 @@ namespace FI.AtividadeEntrevista.BLL
         {
             DAL.DaoBeneficiario ben = new DAL.DaoBeneficiario();
             return ben.Listar(idCliente);
+        }
+
+        /// <summary>
+        /// Excluir beneficiários
+        /// </summary>
+        public bool ExcluirBeneficiario(long idbeneficiario) 
+        {
+            DAL.DaoBeneficiario ben = new DAL.DaoBeneficiario();
+            ben.Excluir(idbeneficiario);
+            return true;
         }
     }
 }
