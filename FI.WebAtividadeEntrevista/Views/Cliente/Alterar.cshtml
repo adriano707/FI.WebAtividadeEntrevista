@@ -10,6 +10,7 @@
         var urlPostBeneficiario = '@Url.Action("IncluirBeneficiario", "Cliente", new { area = ""})';
         var urlListarBeneficiario = '@Url.Action("BeneficiarioList", "Cliente", new { area = "", IdCliente = Model.Id })';
         var urlAlterarBeneficiario = '@Url.Action("AlterarBeneficiario", "Cliente", new { area = "", IdCliente = Model.Id })';
+		var urlExcluirBeneficiario = '@Url.Action("ExcluirBeneficiario", "Cliente", new { area = "", IdCliente = Model.Id })';
 	</script>
     @Scripts.Render("~/bundles/altClientes")
 }

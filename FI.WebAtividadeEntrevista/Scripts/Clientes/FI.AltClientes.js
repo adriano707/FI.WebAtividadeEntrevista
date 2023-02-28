@@ -102,6 +102,7 @@ function AlterarBeneficiario() {
                 window.location.href = urlRetorno;
 
                 MostrarGradeDeBeneficiarios();
+                LimparModalDeBeneficiario();
             }
     })
 }
@@ -135,7 +136,7 @@ function DeletarBeneficiario(idBeneficiario) {
         url: urlExcluirBeneficiario,
         method: "POST",
         data: {
-            idBeneficiario: idBeneficiario
+            idBeneficiario: obj.Id
         },
         error:
             function (r) {
