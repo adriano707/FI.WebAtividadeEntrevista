@@ -199,7 +199,7 @@ namespace WebAtividadeEntrevista.Controllers
             {
                 bo.Alterar(new Beneficiario()
                 {
-                    Id = model.IdCliente,
+                    Id = model.Id,
                     Nome = model.Nome,
                     CPF = model.CPF
                 });

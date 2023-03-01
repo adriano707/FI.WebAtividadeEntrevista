@@ -102,6 +102,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
+				@Html.Hidden("IdBeneficiario");
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">
@@ -116,13 +117,13 @@
 						</div>
 					</div>
 				</div>
+				<button type="button" id="btnSalvar" class="btn btn-primary text-right">Salvar</button>
 			</div>
 			<div class="p-2 m-2">
 				<table id="gridBeneficiarios" class="table"></table>
 			</div>
 			<div class="modal-footer">
 				<button type="button" id="btnFechar" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-				<button type="button" id="btnIncluir" class="btn btn-primary">Incluir</button>
 			</div>
 		</div>
 	</div>

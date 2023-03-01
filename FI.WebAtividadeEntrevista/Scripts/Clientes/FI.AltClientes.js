@@ -48,39 +48,39 @@ $(document).ready(function () {
         });
     });   
 
-    $('#btnIncluir').on('click', function (e) {
+    $('#btnSalvar').on('click', function (e) {
         e.preventDefault();
 
-        IncluirBeneficiario();
-        LimparFormularioDeCliente();
+        let idBeneficiario = $("#IdBeneficiario").val();
+
+        if (idBeneficiario == '' || !idBeneficiario) {
+            IncluirBeneficiario();
+        } else {
+            AlterarBeneficiario();
+        }
     });
 })
 
-function LimparFormularioDeCliente() {
-    $("#Nome").val('');
-    $("#CEP").val('');
-    $("#Email").val('');
-    $("#Sobrenome").val('');
-    $("#Nacionalidade").val('');
-    $("#CPF").val('');
-    $("#Estado").val('');
-    $("#Cidade").val('');
-    $("#Logradouro").val('');
-    $("#Telefone").val('');
-}
-
 function LimparModalDeBeneficiario() {
+    $("IdBeneficiario").val('');
     $("#modalNome").val('');
     $("#modalCPF").val('');
 }
 
 function ObterModalBeneficiario() {
-    var beneficiario = {
+    var beneficiario = { 
         IdCliente: obj.Id,
+        Id: $("#IdBeneficiario").val(),
         Nome: $("#modalNome").val(),
         CPF: $("#modalCPF").val()
     }
     return beneficiario;
+}
+
+function PreencherDadosDoBeneficiarioParaAlteracao(idBeneficiario, nome, cpf) {
+    $("#IdBeneficiario").val(idBeneficiario);
+    $("#modalNome").val(nome);
+    $("#modalCPF").val(cpf);    
 }
 
 function AlterarBeneficiario() {
@@ -98,8 +98,6 @@ function AlterarBeneficiario() {
         success:
             function (r) {
                 ModalDialog("Sucesso!", r)
-                $("#modalBeneficiarios")[0].reset();
-                window.location.href = urlRetorno;
 
                 MostrarGradeDeBeneficiarios();
                 LimparModalDeBeneficiario();
@@ -122,8 +120,6 @@ function IncluirBeneficiario() {
         success:
             function (r) {
                 ModalDialog("Sucesso!", r)
-                $("#modalBeneficiarios")[0].reset();
-                window.location.href = urlRetorno;
 
                 MostrarGradeDeBeneficiarios();
                 LimparModalDeBeneficiario();
@@ -133,11 +129,8 @@ function IncluirBeneficiario() {
 
 function DeletarBeneficiario(idBeneficiario) {
     $.ajax({
-        url: urlExcluirBeneficiario,
-        method: "POST",
-        data: {
-            idBeneficiario: obj.Id
-        },
+        url: `${urlExcluirBeneficiario}?idBeneficiario=${idBeneficiario}`,
+        method: "POST",        
         error:
             function (r) {
                 if (r.status == 400)
@@ -147,11 +140,9 @@ function DeletarBeneficiario(idBeneficiario) {
             },
         success:
             function (r) {
-                ModalDialog("Sucesso!", r)
-                $("#modalBeneficiarios")[0].reset();
-                window.location.href = urlRetorno;
+                ModalDialog("Sucesso!", r)               
 
-                MostrarGradeDeBeneficiarios();
+                $('#gridBeneficiarios').jtable('load');
             }
     })
 }
@@ -175,13 +166,13 @@ function MostrarGradeDeBeneficiarios() {
                 Alterar: {
                     title: '',
                     display: function (data) {
-                        return `<button data-beneficiario-id="${data.Id}" class="btn btn-primary btn-sm alterar" onclick="AlterarBeneficiario()">Alterar</button>`;
+                        return `<button data-beneficiario-id="${data.Id}" class="btn btn-primary btn-sm alterar" onclick="PreencherDadosDoBeneficiarioParaAlteracao(${data.record.Id}, '${data.record.Nome}', '${data.record.CPF}')">Alterar</button>`;
                     }
                 },
                 Excluir: {
                     title: '',
                     display: function (data) {
-                        return `<button data-beneficiario-id="${data.Id}" class="btn btn-primary btn-sm excluir" onclick="DeletarBeneficiario()">Excluir</button>`;
+                        return `<button data-beneficiario-id="${JSON.stringify(data)}" class="btn btn-primary btn-sm excluir" onclick="DeletarBeneficiario(${data.record.Id})">Excluir</button>`;
                     }
                 }
             }

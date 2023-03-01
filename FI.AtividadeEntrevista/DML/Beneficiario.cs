@@ -9,7 +9,7 @@ namespace FI.AtividadeEntrevista.DML
 {
     public class Beneficiario
     {
-        public long Id { get; set; }
+        public long? Id { get; set; }
 
         /// <summary>
         /// Nome

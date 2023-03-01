@@ -28,10 +28,25 @@ $(document).ready(function () {
 				function (r) {
 					ModalDialog("Sucesso!", r)
 					$("#formCadastro")[0].reset();
-				}
+				},
+
+				LimparFormularioDeCliente();
 		});
 	})
 })
+
+function LimparFormularioDeCliente() {
+	$("#Nome").val('');
+	$("#CEP").val('');
+	$("#Email").val('');
+	$("#Sobrenome").val('');
+	$("#Nacionalidade").val('');
+	$("#CPF").val('');
+	$("#Estado").val('');
+	$("#Cidade").val('');
+	$("#Logradouro").val('');
+	$("#Telefone").val('');
+}
 
 function ModalDialog(titulo, texto) {
 	var random = Math.random().toString().replace('.', '');
